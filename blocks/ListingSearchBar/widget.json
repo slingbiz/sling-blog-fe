@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "name": "Listing Search Bar",
+  "key": "ListingSearchBar",
+  "description": "Search Bar Wrapper - accepts List or Grid option ",
+  "type": "block",
+  "ownership": "private",
+  "props": [
+    {
+      "name": "viewType",
+      "propType": "static",
+      "dataType": "option",
+      "options": [
+        {
+          "value": 1,
+          "label": "List"
+        },
+        {
+          "value": 2,
+          "label": "Grid"
+        }
+      ],
+      "default": 2
+    }
+  ]
+}

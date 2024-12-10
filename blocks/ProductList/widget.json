@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "name": "Shows Product List",
+  "key": "ProductList",
+  "description": "Takes product array path from the Api response.",
+  "type": "block",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+    {
+      "name": "responsePath",
+      "propType": "response-derived",
+      "dataType": "string",
+      "default": "data"
+    }
+  ]
+}

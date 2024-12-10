@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "Coming Soon Component",
+  "key": "ComingSoonComponent",
+  "description": "Use this to show Coming Soon on your new web page. ",
+  "type": "component",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+
+  ]
+}

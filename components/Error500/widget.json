@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "Error 500 component",
+  "name": "Error500component",
+  "description": "Use this to show 500 Error section on your new web page. ",
+  "type": "component",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+
+  ]
+}

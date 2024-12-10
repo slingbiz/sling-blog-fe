@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "Global HOC [Note: Local Component - Not available in the Sling Studio] ",
+  "key": "GlobalHOC",
+  "description": "To be used only with the [...global].js NextJS page. This component expects valid path for blocks, components and widgets to be used in the RenderTree module  ",
+  "type": "component",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+  ]
+}

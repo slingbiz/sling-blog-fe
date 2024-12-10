@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "global": false,
+  "name": "Pure Search Bar",
+  "key": "PureListingSearchBar",
+  "description": "Search bar which keeps the search query in local state and calls the onSearch fn passed in the required props",
+  "type": "pure",
+  "availableToAllPages": true,
+  "config": {
+
+  },
+  "requiredProps" : [
+    {
+      "key": "onSearch",
+      "type": "Function"
+    }
+  ]
+}

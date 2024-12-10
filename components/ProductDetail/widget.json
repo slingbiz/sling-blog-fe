@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "Product Detail Page Component",
+  "key": "ProductDetailPageComponent",
+  "description": "Detail page wrapper for Sling FE PDP",
+  "type": "component",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+  ]
+}

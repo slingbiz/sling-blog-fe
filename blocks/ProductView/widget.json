@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "Product View",
+  "key": "ProductView",
+  "description": "PDP - Detail level information for a product.",
+  "type": "block",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+
+  ]
+}

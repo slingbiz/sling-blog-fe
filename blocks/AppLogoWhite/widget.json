@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "White Logo",
+  "key": "WhiteLogo",
+  "description": "Wrapper component which displays White version of the logo & name",
+  "type": "block",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+  ]
+}

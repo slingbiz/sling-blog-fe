@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "Default Sling Home Page ",
+  "key": "DefaultSlingHomePage ",
+  "description": "Edit this to make changes in the Home Page for Sling FE",
+  "type": "component",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+  ]
+}

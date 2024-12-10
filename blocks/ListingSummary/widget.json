@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "name": "Listing Summary Top Bar",
+  "key": "ListingSummaryTopBar",
+  "description": "Summary of total count and current page. h1 & h2 values.",
+  "type": "block",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+    {
+      "name": "totalCount",
+      "propType": "response-derived",
+      "dataType": "string",
+      "default": "341"
+    },
+    {
+      "name": "h1",
+      "propType": "static",
+      "dataType": "string"
+    },
+    {
+      "name": "h2",
+      "propType": "static-derived",
+      "dataType": "string"
+    }
+  ]
+}

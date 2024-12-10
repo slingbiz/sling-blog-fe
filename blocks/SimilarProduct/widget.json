@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "Similar Product List",
+  "key": "SimilarProductList",
+  "description": "Shows Similar Product List, Used on the PDP page.",
+  "type": "block",
+  "ownership": "private",
+  "icon": "",
+  "props": [
+
+  ]
+}

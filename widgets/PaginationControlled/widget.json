@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "Pagination Controlled Widget",
+  "key": "PaginationControlled",
+  "description": "Modify props to make pagination style controlled by the Sling Studio.",
+  "type": "widget",
+  "ownership": "private",
+  "icon": "Widgets",
+  "props": [
+  ]
+}
