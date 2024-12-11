@@ -10,9 +10,9 @@ const BlogsList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true); // Start loading when the fetch is initiated
-      let fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles`;
+      let fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?sort[createdAt]=desc`;
       if (selectedCategory) {
-        fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?filters[categories][name][$eq]=${selectedCategory}`;
+        fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?filters[categories][name][$eq]=${selectedCategory}&sort[createdAt]=desc`;
       }
 
       try {
