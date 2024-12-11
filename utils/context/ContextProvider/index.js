@@ -28,6 +28,7 @@ const ContextProvider = ({
     layout: layout,
     routeConstants: routeConstants,
     ssrApi: ssrApi,
+    selectedCategory: '',
   };
 
   const [state, dispatch] = useReducer(
@@ -91,6 +92,10 @@ const ContextProvider = ({
     dispatch({type: ThemeSetting.SET_RTL, payload: rtl});
   }, []);
 
+  const setSelectedCategory = (category) => {
+    dispatch({type: ThemeSetting.SET_SELECTED_CATEGORY, payload: category});
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -110,6 +115,7 @@ const ContextProvider = ({
         changeLocale,
         changeNavStyle,
         changeRTAnim,
+        setSelectedCategory,
       }}>
       {children}
     </AppContext.Provider>

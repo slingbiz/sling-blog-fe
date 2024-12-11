@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       alignItems: 'center',
     },
-    blogH1: {fontSize: 48, fontWeight: 'bold'},
+    blogH1: {fontSize: 38, fontWeight: 'bold'},
     blogHeroDesc: {
-      fontSize: 24,
+      fontSize: 20,
       color: '#033036',
       margin: theme.spacing(2, 0),
     },

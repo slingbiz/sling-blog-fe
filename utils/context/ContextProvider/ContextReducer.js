@@ -20,6 +20,7 @@ export const ThemeSetting = {
   UPDATE_PRIMARY_COLOR: 'UPDATE_PRIMARY_COLOR',
   UPDATE_SIDEBAR_COLOR: 'UPDATE_SIDEBAR_COLOR',
   UPDATE_SECONDARY_COLOR: 'UPDATE_SECONDARY_COLOR',
+  SET_SELECTED_CATEGORY: 'SET_SELECTED_CATEGORY',
 };
 
 export function contextReducer(state, action) {
@@ -167,6 +168,11 @@ export function contextReducer(state, action) {
         secondary: action.payload,
       };
     }
+    case ThemeSetting.SET_SELECTED_CATEGORY:
+      return {
+        ...state,
+        selectedCategory: action.payload,
+      };
     default:
       return state;
   }
