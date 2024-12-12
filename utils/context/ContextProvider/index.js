@@ -8,6 +8,7 @@ const ContextProvider = ({
   initConfig,
   layout,
   routeConstants,
+  query,
   ssrApi,
 }) => {
   const ContextState = {
@@ -29,6 +30,7 @@ const ContextProvider = ({
     routeConstants: routeConstants,
     ssrApi: ssrApi,
     selectedCategory: '',
+    query: query,
   };
 
   const [state, dispatch] = useReducer(

@@ -7,11 +7,14 @@ const BlogsList = () => {
   const [loading, setLoading] = useState(true); // New state for loading
   const {selectedCategory} = useContext(AppContext) || '';
 
+  // Default image in case the blog does not have an image
+  const defaultImage = '/images/blog-default.png'; // Update this path to your local default image
+
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true); // Start loading when the fetch is initiated
       let fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?sort[createdAt]=desc`;
-      if (selectedCategory) {
+      if (selectedCategory && selectedCategory !== 'all') {
         fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?filters[categories][name][$eq]=${selectedCategory}&sort[createdAt]=desc`;
       }
 
@@ -70,8 +73,9 @@ const BlogsList = () => {
             No Posts Available
           </Typography>
           <Typography variant='body1' style={{color: '#757575', fontSize: 16}}>
-            Currently, there are no posts in this category. Please check again
-            later.
+            Currently, there are no posts in this category{' '}
+            <span style={{fontWeight: 'bold'}}>{selectedCategory}</span>. Please
+            check again later.
           </Typography>
         </Box>
       ) : (
@@ -91,8 +95,8 @@ const BlogsList = () => {
                 }}>
                 {/* Blog Image */}
                 <img
-                  src={blog.image}
-                  // alt={blog.title}
+                  src={blog.image || defaultImage} // Use default image if no blog image
+                  alt={blog.title}
                   style={{
                     width: '100%',
                     height: '200px',

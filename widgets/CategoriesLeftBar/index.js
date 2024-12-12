@@ -1,27 +1,24 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Box, Typography, TextField, InputAdornment} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import {useRouter} from 'next/router';
 
 import AppContext from '../../utils/context/AppContext';
-// Sample categories
-const categoriesInit = [
-  'JavaScript',
-  'React',
-  'Node.js',
-  'CSS',
-  'HTML',
-  'TypeScript',
-  'Java',
-  'Python',
-  'Vue.js',
-  'PHP',
-];
 
 const LeftWidget = () => {
+  const router = useRouter();
+
   const [categories, setCategories] = useState([]);
   const [initCategories, setInitCategories] = useState([]); // To be moved to Context
   const [search, setSearch] = useState('');
-  const {setSelectedCategory, selectedCategory} = useContext(AppContext);
+  const {setSelectedCategory, selectedCategory, query} = useContext(AppContext);
+  const {global} = query || {};
+  const categoryPath = global?.[0] || '';
+
+  useEffect(() => {
+    // Update selected category based on the URL
+    setSelectedCategory(categoryPath);
+  }, [categoryPath]);
 
   // Handle search input change
   const handleSearchChange = (event) => {
@@ -41,13 +38,21 @@ const LeftWidget = () => {
   // Handle category selection
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+    // Replace the current URL with the selected category
+    router.push(
+      {
+        pathname: category,
+      },
+      undefined,
+      {shallow: true},
+    );
   };
 
   useEffect(() => {
     //Fetch categories using an API call.
     const fetchCategories = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/categories`,
+        `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/categories?sort[createdAt]=desc`,
       );
       const {data} = (await response.json()) || {};
       setCategories(data);
@@ -55,7 +60,6 @@ const LeftWidget = () => {
     };
 
     fetchCategories();
-    setCategories(categoriesInit);
   }, []);
 
   return (
@@ -118,7 +122,7 @@ const LeftWidget = () => {
               backgroundColor: '#f0f0f0',
             },
           }}>
-          {name}
+          {name.toUpperCase()}
         </Typography>
       ))}
     </Box>

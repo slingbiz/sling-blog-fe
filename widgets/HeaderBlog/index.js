@@ -131,20 +131,25 @@ export default function NavHeader() {
           />
 
           <Hidden smDown>
-            <Link href='/blog' className={classes.link}>
-              Blog
+            <Link
+              href='https://www.sling.biz/documentation'
+              className={classes.link}>
+              Documentation
             </Link>
-            <Link href='/features' className={classes.link}>
+            <Link
+              href='https://www.sling.biz/#features'
+              className={classes.link}>
               Features
             </Link>
-            <Link href='/solutions' className={classes.link}>
+            {/* <Link href='/solutions' className={classes.link}>
               Solutions
-            </Link>
+            </Link> */}
           </Hidden>
           <Button
             variant='contained'
             color='primary'
             type='submit'
+            onClick={() => window.open('https://studio.sling.biz')}
             className={classes.button}>
             Sling Studio
           </Button>

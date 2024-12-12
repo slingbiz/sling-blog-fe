@@ -31,6 +31,7 @@ const MyApp = ({
   layoutConfig,
   routeConstants,
   apiResponse,
+  query,
   error,
 }) => {
   const store = useStore({
@@ -38,6 +39,7 @@ const MyApp = ({
     layout: {layoutConfig, pageTemplate},
     routeConstants,
     ssrApi: apiResponse,
+    query,
   });
 
   useEffect(() => {
@@ -58,6 +60,7 @@ const MyApp = ({
         initConfig={initConfig}
         layout={{layoutConfig, pageTemplate}}
         routeConstants={routeConstants}
+        query={query}
         ssrApi={apiResponse}>
         <Provider store={store}>
           <SlingThemeProvider appLocale={AppLocale} theme={defaultConfig}>
@@ -87,13 +90,7 @@ MyApp.getInitialProps = async (appContext) => {
   let response = {};
   const {ctx} = appContext;
   const {pathname, query, asPath} = ctx;
-  console.log(
-    '[MyApp.getInitialProps]',
-    pathname,
-    query,
-    asPath,
-    GET_INIT_PROPS,
-  );
+  console.log('[MyApp.getInitialProps]', pathname, query);
   try {
     //Fetch initial Layout based on url.
     response = await axios({
@@ -112,12 +109,13 @@ MyApp.getInitialProps = async (appContext) => {
       layoutConfig: {},
       routeConstants: {},
       apiResponse: {},
+      query: {},
       pageTemplate: '',
       error: true,
     };
   }
 
-  return response;
+  return {...response, query};
 };
 
 export default MyApp;
