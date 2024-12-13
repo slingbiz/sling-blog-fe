@@ -31,6 +31,7 @@ const ContextProvider = ({
     ssrApi: ssrApi,
     selectedCategory: '',
     query: query,
+    blogDetail: '',
   };
 
   const [state, dispatch] = useReducer(

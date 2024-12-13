@@ -2,6 +2,52 @@ import {registerWidget} from 'sling-core';
 import dynamic from 'next/dynamic';
 
 registerWidget(
+  'BlogDetailFooter',
+  dynamic(() => import('./BlogDetailFooter'), {ssr: false}),
+  {
+    description: 'Display blog details.',
+    ownership: 'private',
+    type: 'widget',
+    key: 'BlogDetailFooter',
+    icon: 'Widgets', // Using the provided icon
+    props: [],
+  },
+);
+
+registerWidget(
+  'Blog Detail Body',
+  dynamic(() => import('./BlogDetailBody'), {ssr: false}),
+  {
+    description: 'Display blog details.',
+    ownership: 'private',
+    type: 'widget',
+    key: 'BlogDetailBody',
+    icon: 'Widgets', // Using the provided icon
+    props: [
+      {
+        name: 'blogContent',
+        propType: 'static', // Derived from API response
+        dataType: 'string', // Data type is string
+        default: '', // Default value
+      },
+    ],
+  },
+);
+
+registerWidget(
+  'Sub Header for Detail Page',
+  dynamic(() => import('./SubHeaderPageDetail'), {ssr: false}),
+  {
+    description: 'Sub Header for Detail Page',
+    ownership: 'private',
+    type: 'widget',
+    key: 'SubHeaderPageDetail',
+    icon: 'Widgets', // Using the provided icon
+    props: [], // Add any props if necessary
+  },
+);
+
+registerWidget(
   'List of all blogs',
   dynamic(() => import('./BlogsList'), {ssr: false}),
   {
