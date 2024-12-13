@@ -1,11 +1,13 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {Grid, Box, Typography, CircularProgress} from '@material-ui/core';
 import AppContext from '../../utils/context/AppContext';
+import {useRouter} from 'next/router'; // Import useRouter for navigation
 
 const BlogsList = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true); // New state for loading
   const {selectedCategory} = useContext(AppContext) || '';
+  const router = useRouter(); // Initialize useRouter
 
   // Default image in case the blog does not have an image
   const defaultImage = '/images/blog-default.png'; // Update this path to your local default image
@@ -32,6 +34,10 @@ const BlogsList = () => {
     fetchBlogs();
   }, [selectedCategory]);
 
+  const handlePostClick = (slug) => {
+    // Navigate to the blog post detail page using the slug
+    window.open(`/blog/${slug}`, '_blank');
+  };
   return (
     <Box style={{padding: '16px'}}>
       {/* All posts */}
@@ -84,6 +90,7 @@ const BlogsList = () => {
           {blogs?.map((blog, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Box
+                onClick={() => handlePostClick(blog.slug)} // Handle the click event and navigate
                 style={{
                   padding: '16px',
                   backgroundColor: '#fff',
@@ -92,6 +99,7 @@ const BlogsList = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
+                  cursor: 'pointer',
                 }}>
                 {/* Blog Image */}
                 <img

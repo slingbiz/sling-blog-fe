@@ -164,28 +164,6 @@ export default function NavHeader() {
           </Hidden>
         </Toolbar>
       </AppBar>
-      <Box className={classes.heroSection}>
-        <Box className={classes.heroOverlay} />
-        <Box className={classes.heroContent}>
-          <Typography variant='h1' component='h1' className={classes.blogH1}>
-            <span style={{color: '#033036'}}> Sling</span>
-            <span
-              style={{
-                background: 'rgb(255 152 0)',
-                color: 'white',
-                borderRadius: '10px',
-                padding: '0px 12px',
-                margin: '0px 5px',
-              }}>
-              Blog
-            </span>
-          </Typography>
-          <Typography variant='h4' className={classes.blogHeroDesc}>
-            Discover the latest updates, expert insights, emerging technologies,
-            and curated resources.
-          </Typography>
-        </Box>
-      </Box>
     </div>
   );
 }

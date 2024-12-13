@@ -114,7 +114,7 @@ MyApp.getInitialProps = async (appContext) => {
       error: true,
     };
   }
-
+  console.log(response, 'response');
   return {...response, query};
 };
 

@@ -15,6 +15,18 @@ registerWidget(
 );
 
 registerWidget(
+  'Hero Banner',
+  dynamic(() => import('./HeroBanner'), {ssr: false}),
+  {
+    description: 'Display hero banner on home page.',
+    ownership: 'private',
+    type: 'widget',
+    key: 'HeroBanner',
+    icon: 'Widgets', // Using the provided icon
+    props: [], // Add any props if necessary
+  },
+);
+registerWidget(
   'Left Side bar for Categories',
   dynamic(() => import('./CategoriesLeftBar'), {ssr: false}),
   {
