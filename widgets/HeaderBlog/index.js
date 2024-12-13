@@ -104,22 +104,26 @@ export default function NavHeader() {
       <AppBar position='absolute' className={classes.appBar}>
         <Toolbar>
           <Typography variant='h6' className={classes.title}>
-            <img
-              className={classes.logo}
-              src={`/images/logo-white-with-name.png`}
-              alt='sling-logo'
-            />{' '}
-            <span
-              style={{
-                background: 'rgb(255 152 0)',
-                color: 'white',
-                borderRadius: '5px',
-                padding: '2px 8px',
-                margin: '0px',
-              }}>
-              {' '}
-              Blog
-            </span>
+            <a
+              href='https://blog.sling.biz'
+              style={{display: 'flex', textDecoration: 'none'}}>
+              <img
+                className={classes.logo}
+                src={`/images/logo-white-with-name.png`}
+                alt='sling-logo'
+              />{' '}
+              <span
+                style={{
+                  background: 'rgb(255 152 0)',
+                  color: 'white',
+                  borderRadius: '5px',
+                  padding: '5px 8px',
+                  margin: '0px',
+                }}>
+                {' '}
+                Blog
+              </span>
+            </a>
           </Typography>
 
           {/* Search Bar */}

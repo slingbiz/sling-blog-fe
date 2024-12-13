@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Box, Typography, IconButton} from '@material-ui/core';
 import {ThumbUp, Comment, Share} from '@material-ui/icons'; // Social icons
+import AppContext from '../../utils/context/AppContext';
+const moment = require('moment');
 
 const SubHeaderDetailPage = ({
   title = "What's New in Sling 2.0",
@@ -10,6 +12,8 @@ const SubHeaderDetailPage = ({
   claps = 10,
   comments = 5,
 }) => {
+  const {blogDetail} = useContext(AppContext) || {};
+
   return (
     <Box
       style={{
@@ -23,7 +27,7 @@ const SubHeaderDetailPage = ({
       <Typography
         variant='h1'
         style={{fontWeight: 'bold', marginBottom: '8px', fontSize: 36}}>
-        {title}
+        {blogDetail?.title || title}
       </Typography>
 
       {/* Author, Date, and Read Time */}
@@ -36,7 +40,10 @@ const SubHeaderDetailPage = ({
         <Typography
           variant='body1'
           style={{marginRight: '8px', color: '#757575'}}>
-          · {date}
+          ·{' '}
+          {blogDetail?.createdAt
+            ? moment(blogDetail.createdAt).format('MMM D, YYYY')
+            : date}
         </Typography>
         <Typography variant='body1' style={{color: '#757575'}}>
           · {readTime}

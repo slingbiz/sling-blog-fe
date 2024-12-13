@@ -40,6 +40,10 @@ const ContextProvider = ({
     () => ContextState,
   );
 
+  const setBlogDetail = (blogDetail) => {
+    dispatch({type: ThemeSetting.SET_BLOG_DETAIL, payload: blogDetail});
+  };
+
   const setFooter = (footer) => {
     dispatch({type: ThemeSetting.SET_FOOTER, payload: footer});
   };
@@ -119,6 +123,7 @@ const ContextProvider = ({
         changeNavStyle,
         changeRTAnim,
         setSelectedCategory,
+        setBlogDetail,
       }}>
       {children}
     </AppContext.Provider>

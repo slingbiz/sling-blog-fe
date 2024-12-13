@@ -1,28 +1,54 @@
 import React, {useContext, useEffect} from 'react';
 import {Box, Typography} from '@material-ui/core';
 import AppContext from '../../utils/context/AppContext';
+const defaultImage = '/images/blog-default.png'; // Update this path to your local default image
 
 const BlogDetailBody = () => {
   const {blogDetail, setBlogDetail, query} = useContext(AppContext) || {};
   const [loading, setLoading] = React.useState(false);
 
+  const {global} = query || {};
+  const slug = global ? global[1] : '';
+
+  useEffect(() => {
+    const fetchBlogDetail = async () => {
+      setLoading(true); // Start loading when the fetch is initiated
+      let fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?filters[slug][$eq]=${slug}`;
+
+      try {
+        const response = await fetch(fetchURL);
+        const {data} = (await response.json()) || {};
+        setBlogDetail(data?.[0]); // Set fetched data into state
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false); // Set loading to false once the fetch is complete
+      }
+    };
+
+    fetchBlogDetail();
+  }, [query]);
+
   return (
     <Box style={{padding: '20px', backgroundColor: '#f9f9f9'}}>
-      {blogDetail}
+      <Box style={{display: 'flex', justifyContent: 'center'}}>
+        <img
+          style={{maxHeight: '300px', textAlign: 'center'}}
+          src={blogDetail?.image || defaultImage}
+        />
+      </Box>
       <Typography
-        variant='h4'
-        style={{marginBottom: '16px', fontWeight: '200', fontSize: 18}}>
-        Not having to manage an email server is awesome, thank you Mailgun. I am
-        currently integrating with Digital Ocean and ran into some documentation
-        confusion with DNS records, especially when trying to configure for a
-        subdomain.
-      </Typography>
+        variant='h3'
+        style={{
+          marginBottom: '16px',
+          fontWeight: '200',
+          fontSize: 18,
+        }}></Typography>
 
       <Typography
         variant='body1'
         style={{marginBottom: '16px', fontWeight: '400', fontSize: 18}}>
-        After following Mailgun’s instructions (including the Digital Ocean
-        guide, alternate guide, and community help) I was able to get it setup.
+        {blogDetail?.content}
       </Typography>
 
       {/* Section Title */}

@@ -21,6 +21,7 @@ export const ThemeSetting = {
   UPDATE_SIDEBAR_COLOR: 'UPDATE_SIDEBAR_COLOR',
   UPDATE_SECONDARY_COLOR: 'UPDATE_SECONDARY_COLOR',
   SET_SELECTED_CATEGORY: 'SET_SELECTED_CATEGORY',
+  SET_BLOG_DETAIL: 'SET_BLOG_DETAIL',
 };
 
 export function contextReducer(state, action) {
@@ -172,6 +173,11 @@ export function contextReducer(state, action) {
       return {
         ...state,
         selectedCategory: action.payload,
+      };
+    case ThemeSetting.SET_BLOG_DETAIL:
+      return {
+        ...state,
+        blogDetail: action.payload,
       };
     default:
       return state;
