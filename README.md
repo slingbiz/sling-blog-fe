@@ -1,94 +1,268 @@
+# Blog Frontend Built with Sling
 
-<div align="center">
-  <h1>Create Sling App</h1>
-</div>
+This is the frontend for **blog.sling.biz** built using **Sling** — a flexible content management system that allows for easy widget creation, dynamic page routing, and integration with your APIs.
 
-<div align="center">
-  <img src="https://sling.biz/assets/images/sling_biz_sling_image.jpg"/>
-</div>
+This README outlines how the frontend of `blog.sling.biz` was created using Sling, starting from the creation of page templates, defining page routes, and creating custom widgets that help display blog data dynamically.
 
-<p align="center">
-  <strong>
-    <a href="https://studio.sling.biz">🚀 Live Demo</a>
-  </strong>
-</p>
+## Table of Contents
 
-Open source drag and drop frontend CMS in NextJs. Completely customizable Pages, Templates & Widgets written in NextJs. Sling is an Open Source alternative to Builder.io.
+- [Introduction](#introduction)
+- [Tech Stack](#tech-stack)
+- [Widgets Created](#widgets-created)
+- [Page Templates & Routes](#page-templates--routes)
+- [Sample Code & Explanation](#sample-code--explanation)
+- [How to Run](#how-to-run)
+- [GitHub Repo](#github-repo)
 
-## ✨ Features :fire:
+## Introduction
 
-- **It's just React & NodeJs**
-- **Control how your components are edited**: With Sling.biz, you control the React widgets and their props from the Studio directly.
+The `blog.sling.biz` site is a blog frontend that dynamically displays blog posts based on categories. It leverages **Sling**, a content management system (CMS), to make the frontend modular, reusable, and easy to maintain. The goal of this project was to allow users to select categories, fetch relevant blog posts from a backend API, and display them seamlessly.
 
-## 🛠️ Prerequisites
+## Tech Stack
 
-To properly set up Sling, you need:
+- **Frontend**: Sling.biz (with hosted Studio to manage UI)
+- **Backend**: Strapi (for managing blog data, categories, etc.)
+- **Widgets**: Custom widgets built using Sling
+- **Styling**: Material-UI (for UI components)
+- **Deployment**: Vercel
 
-- **MongoDB URI**: Make sure you have a MongoDB instance running and obtain its URI.
-- **Node.js**: Ensure you have Node.js version 18 or greater installed.
+## Widgets Created
 
-## 🚀 Setting up Sling - Hosted Studio
+### 1. **CategoriesLeftBar Widget**
 
-To set up a Sling project locally using [Hosted Studio](https://studio.sling.biz/), follow these steps:
+This widget displays a list of categories on the left sidebar. It allows users to select a category, and based on their selection, it fetches the relevant blog posts.
 
-### Frontend App Setup
+**Key Features:**
 
-1. **Use the Installer**:
-   - Create the Sling Frontend app by running the following command:
-     ```sh
-     yarn create sling-app my-project
-     ```
-   - Follow the prompts to configure your Sling app.
+- Displays a list of blog categories.
+- Users can click on a category to filter the blog posts.
+- Dynamically fetches data from Strapi’s API to show blog posts filtered by category.
 
-      
+```javascript
+import React, { useState, useEffect, useContext } from "react";
+import { Box, Typography, TextField } from "@material-ui/core";
+import AppContext from "../../utils/context/AppContext";
 
-2. **Obtain Sling Studio Keys**
+const CategoriesLeftBar = () => {
+  const [categories, setCategories] = useState([]);
+  const { selectedCategory, setSelectedCategory } = useContext(AppContext);
 
-    
-   - Visit [Sling Studio](https://studio.sling.biz/) to sign up to create an account.
-   - Complete the company setup.
-   - Navigate to your account settings or profile section.
-   - Locate the section for accessing or generating Sling Studio Keys.
-   - Copy the keys provided and update them in the `.env` file for the frontend app.
-   - **Voilà!** You can now access your app at [http://localhost:4087](http://localhost:4087).
-! 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/categories`
+      );
+      const { data } = await response.json();
+      setCategories(data);
+    };
+    fetchCategories();
+  }, []);
 
-3. **Play around**
+  return (
+    <Box>
+      <Typography variant="h6">Categories</Typography>
+      {categories.map((category, index) => (
+        <Typography
+          key={index}
+          onClick={() => setSelectedCategory(category.name)}
+          style={{ cursor: "pointer" }}
+        >
+          {category.name}
+        </Typography>
+      ))}
+    </Box>
+  );
+};
 
-   1. Access  [Sling Studio](https://studio.sling.biz/) .
-   2. **Create custom widgets** and use them in your page templates.
-   3. **Modify content from Studio** and view the changes in your pages.
+export default CategoriesLeftBar;
+```
+
+### 2. **BlogsList Widget**
+
+This widget displays a list of blog posts based on the selected category. If no category is selected, it displays all posts.
+
+**Key Features:**
+
+- Displays blog posts in a grid layout.
+- Each post contains an image, title, author, and read time.
+- Fetches blog posts dynamically from the Strapi API based on the selected category.
+
+```javascript
+import React, { useState, useEffect, useContext } from "react";
+import { Box, Grid, Typography, CircularProgress } from "@material-ui/core";
+import AppContext from "../../utils/context/AppContext";
+
+const BlogsList = () => {
+  const [blogs, setBlogs] = useState([]);
+  const { selectedCategory } = useContext(AppContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      let fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?sort[createdAt]=desc`;
+      if (selectedCategory) {
+        fetchURL = `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?filters[categories][name][$eq]=${selectedCategory}&sort[createdAt]=desc`;
+      }
+      const response = await fetch(fetchURL);
+      const { data } = await response.json();
+      setBlogs(data);
+      setLoading(false);
+    };
+
+    fetchBlogs();
+  }, [selectedCategory]);
+
+  return (
+    <Box style={{ padding: "16px" }}>
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <CircularProgress color="primary" />
+        </Box>
+      ) : blogs.length === 0 ? (
+        <Box textAlign="center">
+          <Typography variant="h5">No Posts Available</Typography>
+        </Box>
+      ) : (
+        <Grid container spacing={3}>
+          {blogs.map((blog) => (
+            <Grid item xs={12} sm={6} md={4} key={blog.id}>
+              <Box>
+                <img
+                  src={blog.image || "/images/default-image.png"}
+                  alt={blog.title}
+                  style={{ width: "100%" }}
+                />
+                <Typography variant="h6">{blog.title}</Typography>
+                <Typography variant="body2">{blog.author}</Typography>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Box>
+  );
+};
+
+export default BlogsList;
+```
+
+### 3. **BlogDetail Widget**
+
+This widget shows the detailed view of a selected blog post. It fetches the blog post data using its unique `slug` from the Strapi API.
+
+**Key Features:**
+
+- Displays a single blog post's detailed content.
+- The content is fetched dynamically based on the `slug` passed in the URL.
+
+```javascript
+import React, { useState, useEffect } from "react";
+import { Box, Typography } from "@material-ui/core";
+
+const BlogDetail = ({ slug }) => {
+  const [blog, setBlog] = useState(null);
+
+  useEffect(() => {
+    const fetchBlogDetail = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BLOG_API_URL}/api/articles?filters[slug][$eq]=${slug}`
+      );
+      const { data } = await response.json();
+      setBlog(data[0]);
+    };
+
+    fetchBlogDetail();
+  }, [slug]);
+
+  if (!blog) return <Typography>Loading...</Typography>;
+
+  return (
+    <Box>
+      <Typography variant="h3">{blog.title}</Typography>
+      <Typography variant="body1">{blog.content}</Typography>
+    </Box>
+  );
+};
+
+export default BlogDetail;
+```
+
+## Page Templates & Routes
+
+### Page Templates
+
+The project uses page templates in Next.js to define the overall structure of the pages. Templates include the layout for the header, footer, and the content area where widgets are rendered.
+
+Example template:
+
+```javascript
+import React from "react";
+import CategoriesLeftBar from "./CategoriesLeftBar";
+import BlogsList from "./BlogsList";
+
+const BlogPageTemplate = () => {
+  return (
+    <Box display="flex">
+      <CategoriesLeftBar />
+      <BlogsList />
+    </Box>
+  );
+};
+
+export default BlogPageTemplate;
+```
+
+### Page Routes
+
+Using Next.js dynamic routing, you can map the blog detail page with the `slug` parameter.
+
+```javascript
+import { useRouter } from "next/router";
+import BlogDetail from "../components/BlogDetail";
+
+const BlogDetailPage = () => {
+  const router = useRouter();
+  const { slug } = router.query;
+
+  return <BlogDetail slug={slug} />;
+};
+
+export default BlogDetailPage;
+```
+
+## How to Run
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/slingbiz/sling-blog-fe.git
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   cd blog.sling.biz
+   npm install
+   ```
+
+3. Create your account on [Sling Studio](https://studio.sling.biz) and get your API key.
+
+4. Update your .env file with your API key.
+
+5. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+6. Visit `http://localhost:4087` in your browser.
+
+## GitHub Repo
+
+You can view and contribute to the repository [here](https://github.com/slingbiz/sling-blog-fe.git).
 
 
-## 🌐 Setting up Sling - Self Hosted Studio
+## Live Blog
 
-If you prefer to host Sling Studio on your local machine, follow these instructions. Sling consists of three main parts: Sling Studio, Sling API, and Sling FE.
-
-1. **Run the Installer**:
-   - Use the installer to set up the Sling project by running the following command:
-     ```sh
-     yarn create sling-app my-project
-     ```
-
-2. **Follow the prompts to configure your Sling app** by picking self hosted option. The starter script will start the services in the background but you can close it and start on your own.
-
-
-3. **Open your browser and navigate to**:
-   - Frontend: `http://localhost:4087`
-   - Studio: `http://localhost:2021`
-   - API: `http://localhost:10001`
-
-
-## 📚 Docs
-
-- [Website](https://sling.biz)
-- [Documentation](https://sling.biz/documentation/)
-- [Demo](https://studio.sling.biz)
-
-
-
-## 🙋 Getting Help :wave:
-
-If you have any questions or something you'd like to discuss (e.g., contributing or queries), please head over to our [Slack](https://slingbiz.slack.com/archives/C06KE4ZMSQP) channel.
-
-Alternatively, you can raise a [GitHub issue](https://github.com/slingbiz/sling-fe/issues), or reach out directly to the author via [Email](mailto:ankur@sling.biz) or [LinkedIn](https://www.linkedin.com/in/ankurpata/).
+Visit live blog at [blog.sling.biz](https://blog.sling.biz) to see the implementation in action.
