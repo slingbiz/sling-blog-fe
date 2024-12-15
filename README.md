@@ -192,44 +192,15 @@ export default BlogDetail;
 
 ### Page Templates
 
-The project uses page templates in Next.js to define the overall structure of the pages. Templates include the layout for the header, footer, and the content area where widgets are rendered.
+The project uses page templates in Sling Studio to define the overall structure of the pages. Templates include the layout for the header, footer, and the content area where widgets are rendered.
 
 Example template:
-
-```javascript
-import React from "react";
-import CategoriesLeftBar from "./CategoriesLeftBar";
-import BlogsList from "./BlogsList";
-
-const BlogPageTemplate = () => {
-  return (
-    <Box display="flex">
-      <CategoriesLeftBar />
-      <BlogsList />
-    </Box>
-  );
-};
-
-export default BlogPageTemplate;
-```
-
+ 
 ### Page Routes
 
-Using Next.js dynamic routing, you can map the blog detail page with the `slug` parameter.
+Ceate Page routes from Sling Studio.
 
-```javascript
-import { useRouter } from "next/router";
-import BlogDetail from "../components/BlogDetail";
-
-const BlogDetailPage = () => {
-  const router = useRouter();
-  const { slug } = router.query;
-
-  return <BlogDetail slug={slug} />;
-};
-
-export default BlogDetailPage;
-```
+ 
 
 ## How to Run
 
